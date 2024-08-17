@@ -28,13 +28,27 @@ Snake *tail;
 
 void init_snake(){
     Snake *new = malloc(sizeof(Snake));
-    new->x = rand() % (GRID_SIZE % 2)  + (GRID_SIZE / 4);
-    new->y = rand() % (GRID_SIZE % 2)  + (GRID_SIZE / 4);
+    new->x = rand() % (GRID_SIZE / 2)  + (GRID_SIZE / 4);
+    new->y = rand() % (GRID_SIZE / 2)  + (GRID_SIZE / 4);
     new->dir = SNAKE_UP;
     new->next = NULL;
 
     head=new;
     tail=new;
+
+    return;
+}
+
+void increase_snake(){
+    Snake *new = malloc(sizeof(Snake));
+    new->x = tail->x;
+    new->y = tail->y -1;
+    new->dir = tail->dir;
+
+    new->next = NULL;
+    tail->next = new;
+
+    tail = new;
 
     return;
 }
@@ -60,7 +74,6 @@ void render_grid(SDL_Renderer *renderer, int x, int y)
 }
 
 int main(){
-
     SDL_Window *window;
     SDL_Renderer *renderer;
 
