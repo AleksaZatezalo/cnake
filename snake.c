@@ -53,6 +53,24 @@ void increase_snake(){
     return;
 }
 
+void move_snake(){
+    switch(head->dir){
+        case SNAKE_UP:
+            head->y--;
+            break;
+        case SNAKE_DOWN:
+            head->y++;
+            break;
+        case SNAKE_LEFT:
+            head->x--;
+            break;
+        case SNAKE_RIGHT:
+            head->x++;
+            break;
+    }
+    return;
+}
+
 void render_snake(SDL_Renderer *renderer, int x, int y)
 {
     SDL_SetRenderDrawColor(renderer, 0x00, 0xff, 0x00, 255);
@@ -148,13 +166,13 @@ int main(){
 
         SDL_RenderClear(renderer);
         // Render Loop Started
-
+        move_snake();
         render_grid(renderer, grid_x, grid_y);
         render_snake(renderer, grid_x, grid_y);
-        
         // Render Loop Finished
         SDL_SetRenderDrawColor(renderer, 0x11, 0x11, 0x11, 255);
         SDL_RenderPresent(renderer);
+        SDL_Delay(200);
     }
 
     SDL_DestroyRenderer(renderer);
