@@ -53,6 +53,27 @@ void increase_snake(){
     return;
 }
 
+void render_snake(SDL_Renderer *renderer, int x, int y)
+{
+    SDL_SetRenderDrawColor(renderer, 0x00, 0xff, 0x00, 255);
+    
+    int seg_size = GRID_DIM / GRID_SIZE;
+    SDL_Rect seg;
+    seg.w = seg_size;
+    seg.h = seg_size;
+
+    Snake *track = head;
+    while (track != NULL){
+        seg.x = x + track->x *seg_size;
+        seg.y = y + track->y *seg_size;
+
+        SDL_RenderFillRect(renderer, &seg);
+
+        track = track->next;
+    }
+    return;
+}
+
 void render_grid(SDL_Renderer *renderer, int x, int y)
 {
     int cell_size = GRID_DIM / GRID_SIZE;
@@ -74,6 +95,8 @@ void render_grid(SDL_Renderer *renderer, int x, int y)
 }
 
 int main(){
+    init_snake();
+
     SDL_Window *window;
     SDL_Renderer *renderer;
 
@@ -127,6 +150,7 @@ int main(){
         // Render Loop Started
 
         render_grid(renderer, grid_x, grid_y);
+        render_snake(renderer, grid_x, grid_y);
         
         // Render Loop Finished
         SDL_SetRenderDrawColor(renderer, 0x11, 0x11, 0x11, 255);
