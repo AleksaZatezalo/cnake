@@ -10,6 +10,7 @@
 
 void render_grid(SDL_Renderer *renderer, int x, int y)
 {
+    SDL_SetRenderDrawColor(renderer, 0x55, 0x55, 0x55, 255);
     int cell_size = GRID_DIM / GRID_SIZE;
     SDL_Rect cell;
     cell.w = cell_size;
@@ -19,6 +20,7 @@ void render_grid(SDL_Renderer *renderer, int x, int y)
         for(int j; j < GRID_SIZE; j++){
             cell.x = x + i * cell_size;
             cell.y = y + j * cell_size;
+            SDL_RenderDrawRect(renderer, &cell);
         }
     }
     return; 
