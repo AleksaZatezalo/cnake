@@ -8,6 +8,21 @@
 #define GRID_SIZE 20
 #define GRID_DIM 800
 
+void render_grid(SDL_Renderer *renderer, int x, int y)
+{
+    int cell_size = GRID_DIM / GRID_SIZE;
+    SDL_SetRenderDrawColor(renderer, 0x55, 0x55, 0x55, 255);
+
+    SDL_Rect cell;
+    cell.w = cell_size;
+    cell.h = cell_size;
+    cell.x = x;
+    cell.y = y;
+
+    SDL_RenderDrawRect(renderer, &cell);
+    return;
+}
+
 int main(){
 
     SDL_Window *window;
@@ -36,10 +51,6 @@ int main(){
         fprintf(stderr, "ERROR: !window");
     }
 
-    SDL_SetRenderDrawColor(renderer, 0x00, 0xff, 0x00, 255);
-    SDL_RenderClear(renderer);
-    SDL_RenderPresent(renderer);
-
     bool quit = false;
     SDL_Event event;
 
@@ -59,6 +70,15 @@ int main(){
                     }
             }
         }
+
+        SDL_RenderClear(renderer);
+        // Render Loop Started
+
+        render_grid(renderer, 200, 200);
+        
+        // Render Loop Finished
+        SDL_SetRenderDrawColor(renderer, 0x00, 0xff, 0x00, 255);
+        SDL_RenderPresent(renderer);
     }
 
     SDL_DestroyRenderer(renderer);
