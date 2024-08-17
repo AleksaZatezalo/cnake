@@ -14,6 +14,13 @@ enum {
     SNAKE_LEFT,
     SNAKE_RIGHT,
 };
+
+typedef struct {
+    int x;
+    int y;
+} apple;
+apple Apple;
+
 struct snake {
     int x;
     int y;
@@ -136,11 +143,35 @@ void render_grid(SDL_Renderer *renderer, int x, int y)
     return;
 }
 
+void gen_apple(){
+    Apple.x = rand() % GRID_SIZE;
+    Apple.y = rand() % GRID_SIZE;
+}
+
+void render_apple(SDL_Renderer *renderer, int x, int y){
+
+    SDL_SetRenderDrawColor(renderer, 0xff, 0x00, 0x00, 255);
+
+    int apple_size = GRID_DIM / GRID_SIZE;
+    
+    SDL_Rect app;
+    app.w = apple_size;
+    app.h = apple_size;
+    app.x = x + Apple.x * apple_size;
+    app.y = y + Apple.y * apple_size;
+
+    SDL_RenderFillRect(renderer, &app);
+}
+
 int main(){
+    srand(time(0));
+
     init_snake();
     increase_snake();
     increase_snake();
     increase_snake();
+
+    gen_apple();
 
     SDL_Window *window;
     SDL_Renderer *renderer;
@@ -208,6 +239,8 @@ int main(){
         move_snake();
         render_grid(renderer, grid_x, grid_y);
         render_snake(renderer, grid_x, grid_y);
+        render_apple(renderer, grid_x, grid_y);
+        
         // Render Loop Finished
         SDL_SetRenderDrawColor(renderer, 0x11, 0x11, 0x11, 255);
         SDL_RenderPresent(renderer);
