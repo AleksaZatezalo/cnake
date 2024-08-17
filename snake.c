@@ -187,6 +187,18 @@ int main(){
                         case SDLK_ESCAPE:
                             quit = true;
                             break;
+                        case SDLK_UP:
+                            head->dir = SNAKE_UP;
+                            break;
+                        case SDLK_DOWN:
+                            head->dir = SNAKE_DOWN;
+                            break;
+                        case SDLK_LEFT:
+                            head->dir = SNAKE_LEFT;
+                            break;
+                        case SDLK_RIGHT:
+                            head->dir = SNAKE_RIGHT;
+                            break;
                     }
             }
         }
