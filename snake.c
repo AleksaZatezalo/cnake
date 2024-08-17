@@ -50,7 +50,7 @@ int main(){
             }
         }
 
-        SDL_SetRenderDrawColor(renderer, 0x11, 0x11, 0x11, 255);
+        SDL_SetRenderDrawColor(renderer, 0x00, 0xff, 0x00, 255);
         SDL_RenderClear(renderer);
         SDL_RenderPresent(renderer);
 
