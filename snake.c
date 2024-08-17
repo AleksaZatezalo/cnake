@@ -8,6 +8,37 @@
 #define GRID_SIZE 20
 #define GRID_DIM 1000
 
+enum {
+    SNAKE_UP,
+    SNAKE_DOWN,
+    SNAKE_LEFT,
+    SNAKE_RIGHT,
+};
+struct snake {
+    int x;
+    int y;
+    int dir;
+
+    struct snake *next;
+};
+typedef struct snake Snake;
+
+Snake *head;
+Snake *tail;
+
+void init_snake(){
+    Snake *new = malloc(sizeof(Snake));
+    new->x = rand() % (GRID_SIZE % 2)  + (GRID_SIZE / 4);
+    new->y = rand() % (GRID_SIZE % 2)  + (GRID_SIZE / 4);
+    new->dir = SNAKE_UP;
+    new->next = NULL;
+
+    head=new;
+    tail=new;
+
+    return;
+}
+
 void render_grid(SDL_Renderer *renderer, int x, int y)
 {
     int cell_size = GRID_DIM / GRID_SIZE;
