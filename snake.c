@@ -54,6 +54,9 @@ void increase_snake(){
 }
 
 void move_snake(){
+    int prev_x = head->x;
+    int prev_y = head->y;
+
     switch(head->dir){
         case SNAKE_UP:
             head->y--;
@@ -68,6 +71,27 @@ void move_snake(){
             head->x++;
             break;
     }
+
+    Snake *track = head;
+
+    if (track->next != NULL){
+        track = track->next;
+    }
+
+    while(track != NULL){
+        int save_x = track->x;
+        int save_y = track->y;
+
+        track->x = prev_x;
+        track->y = prev_y;
+        
+        track = track->next;
+
+        prev_x = save_x;
+        prev_y = save_y;
+    }
+
+
     return;
 }
 
@@ -114,6 +138,9 @@ void render_grid(SDL_Renderer *renderer, int x, int y)
 
 int main(){
     init_snake();
+    increase_snake();
+    increase_snake();
+    increase_snake();
 
     SDL_Window *window;
     SDL_Renderer *renderer;
