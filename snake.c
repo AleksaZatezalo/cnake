@@ -6,7 +6,7 @@
 #define WINDOW_HEIGHT 1000
 
 #define GRID_SIZE 20
-#define GRID_DIM 800
+#define GRID_DIM 1000
 
 void render_grid(SDL_Renderer *renderer, int x, int y)
 {
@@ -16,10 +16,15 @@ void render_grid(SDL_Renderer *renderer, int x, int y)
     SDL_Rect cell;
     cell.w = cell_size;
     cell.h = cell_size;
-    cell.x = x;
-    cell.y = y;
 
-    SDL_RenderDrawRect(renderer, &cell);
+    for (int i = 0; i < GRID_SIZE; i++){
+        for (int j = 0; j < GRID_SIZE; j++){
+            cell.x = x + (i * cell_size);
+            cell.y = y + (j * cell_size);
+            SDL_RenderDrawRect(renderer, &cell);
+        }
+    }
+
     return;
 }
 
@@ -74,7 +79,7 @@ int main(){
         SDL_RenderClear(renderer);
         // Render Loop Started
 
-        render_grid(renderer, 200, 200);
+        render_grid(renderer, 0, 0);
         
         // Render Loop Finished
         SDL_SetRenderDrawColor(renderer, 0x00, 0xff, 0x00, 255);
