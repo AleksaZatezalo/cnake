@@ -1,9 +1,28 @@
 #include "snake.h"
 
-#define WINDOW_X 0
-#define WINDOW_Y 0
-#define WINDOW_WIDTH 1000
-#define WINDOW_HEIGHT 1000
+#define WINDOW_X 10
+#define WINDOW_Y -20
+#define WINDOW_WIDTH 1770
+#define WINDOW_HEIGHT 1405
+
+#define GRID_SIZE 20
+#define GRID_DIM 800
+
+void render_grid(SDL_Renderer *renderer, int x, int y)
+{
+    int cell_size = GRID_DIM / GRID_SIZE;
+    SDL_Rect cell;
+    cell.w = cell_size;
+    cell.h = cell_size;
+
+    for (int i = 0; i < GRID_SIZE; i++){
+        for(int j; j < GRID_SIZE; j++){
+            cell.x = x + i * cell_size;
+            cell.y = y + j * cell_size;
+        }
+    }
+    return; 
+}
 
 int main(){
 
@@ -31,13 +50,9 @@ int main(){
         fprintf(stderr, "ERROR: !renderer");
     }
 
-    SDL_SetRenderDrawColor(renderer, 0x00, 0xff, 0x00, 255);
-    SDL_RenderClear(renderer);
-    SDL_RenderPresent(renderer);
-
+    
     bool quit = false;
     SDL_Event event;
-
     while(!quit){
         while(SDL_PollEvent(&event)){
             switch(event.type) {
@@ -50,6 +65,12 @@ int main(){
                     break;
             }
         }
+
+        SDL_SetRenderDrawColor(renderer, 0x11, 0x11, 0x11, 255);
+        SDL_RenderClear(renderer);
+        render_grid(renderer, 1, 1);
+        SDL_RenderPresent(renderer);
+
     }
 
     
