@@ -2,8 +2,8 @@
 
 #define WINDOW_X 0
 #define WINDOW_Y 0
-#define WINDOW_WIDTH 1000
-#define WINDOW_HEIGHT 1000
+#define WINDOW_WIDTH 1200
+#define WINDOW_HEIGHT 1200
 
 #define GRID_SIZE 20
 #define GRID_DIM 1000
@@ -53,8 +53,11 @@ int main(){
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     if (!renderer){
-        fprintf(stderr, "ERROR: !window");
+        fprintf(stderr, "ERROR: !renderer");
     }
+
+    int grid_x = WINDOW_WIDTH / 2 - GRID_DIM / 2;
+    int grid_y =   WINDOW_HEIGHT / 2 - GRID_DIM /2;
 
     bool quit = false;
     SDL_Event event;
@@ -79,10 +82,10 @@ int main(){
         SDL_RenderClear(renderer);
         // Render Loop Started
 
-        render_grid(renderer, 0, 0);
+        render_grid(renderer, grid_x, grid_y);
         
         // Render Loop Finished
-        SDL_SetRenderDrawColor(renderer, 0x00, 0xff, 0x00, 255);
+        SDL_SetRenderDrawColor(renderer, 0x11, 0x11, 0x11, 255);
         SDL_RenderPresent(renderer);
     }
 
