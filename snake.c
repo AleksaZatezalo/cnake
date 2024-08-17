@@ -1,9 +1,9 @@
 #include "snake.h"
 
-#define WINDOW_X 10
-#define WINDOW_Y -20
-#define WINDOW_WIDTH 1770
-#define WINDOW_HEIGHT 1405
+#define WINDOW_X 0
+#define WINDOW_Y 0
+#define WINDOW_WIDTH 1000
+#define WINDOW_HEIGHT 1000
 
 #define GRID_SIZE 20
 #define GRID_DIM 800
@@ -13,7 +13,7 @@ int main(){
     SDL_Window *window;
     SDL_Renderer *renderer;
 
-    if(SDL_INIT_VIDEO < 0){
+    if (SDL_INIT_VIDEO < 0){
         fprintf(stderr, "ERROR: SDL_INIT_VIDEO");
     }
 
@@ -25,40 +25,25 @@ int main(){
         WINDOW_HEIGHT,
         SDL_WINDOW_BORDERLESS
     );
+
     if (!window){
         fprintf(stderr, "ERROR: !window");
     }
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
     if (!renderer){
-        fprintf(stderr, "ERROR: !renderer");
+        fprintf(stderr, "ERROR: !window");
     }
 
-    
-    bool quit = false;
-    SDL_Event event;
-    while(!quit){
-        while(SDL_PollEvent(&event)){
-            switch(event.type) {
-                case SDL_KEYDOWN:
-                    switch(event.key.keysym.sym){
-                        case SDLK_ESCAPE:
-                            quit=true;
-                            break;
-                    }
-                    break;
-            }
-        }
+    SDL_SetRenderDrawColor(renderer, 0x00, 0xff, 0x00, 255);
+    SDL_RenderClear(renderer);
+    SDL_RenderPresent(renderer);
 
-        SDL_SetRenderDrawColor(renderer, 0x00, 0xff, 0x00, 255);
-        SDL_RenderClear(renderer);
-        SDL_RenderPresent(renderer);
-
-    }
-
-    
+    SDL_Delay(2000);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+
     return 0;
 }
