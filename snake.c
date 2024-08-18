@@ -48,6 +48,26 @@ void init_snake(){
 
 void increase_snake(){
     Snake *new = malloc(sizeof(Snake));
+
+    switch(tail->dir){
+        case SNAKE_UP:
+            new->x = tail->x;
+            new->y = tail->y+1;
+            break;
+        case SNAKE_DOWN:
+            new->x = tail->x;
+            new->y = tail->y-1;
+            break;
+        case SNAKE_LEFT:
+            new->x = tail->x+1;
+            new->y = tail->y;
+            break;
+        case SNAKE_RIGHT:
+            new->x = tail->x-1;
+            new->y = tail->y;
+            break;
+    }
+
     new->x = tail->x;
     new->y = tail->y -1;
     new->dir = tail->dir;
