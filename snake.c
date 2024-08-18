@@ -185,8 +185,22 @@ void render_grid(SDL_Renderer *renderer, int x, int y)
 }
 
 void gen_apple(){
-    Apple.x = rand() % GRID_SIZE;
-    Apple.y = rand() % GRID_SIZE;
+
+    bool in_snake;
+    do {
+        in_snake = false;
+        Apple.x = rand() % GRID_SIZE;
+        Apple.y = rand() % GRID_SIZE;
+        
+        Snake *track = head;
+        while(track != NULL){
+            if(track->x == Apple.x && track->y == Apple.y){
+                in_snake = true;
+            }
+        track = track->next;
+        }
+    } while(in_snake);
+
 }
 
 void render_apple(SDL_Renderer *renderer, int x, int y){
@@ -214,8 +228,21 @@ void detect_apple(){
 }
 
 void detect_crash(){
-    if(head->x < 0 || head->x > GRID_SIZE || head->y < 0 || head->y > GRID_SIZE){
+    if(head->x < 0 || head->x >= GRID_SIZE || head->y < 0 || head->y >= GRID_SIZE){
         reset_snake();
+    }
+
+    Snake *track = head;
+    
+    if(track->next != NULL){
+        track = track->next;
+    }
+
+    while (track != NULL){
+        if(track->x == head->x && track->y == head->y){
+            reset_snake();
+        }
+        track = track->next;
     }
     return;
 }
