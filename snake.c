@@ -283,10 +283,92 @@ void turn_right(){
     return;
 }
 
+enum {
+    TRY_FORWARD,
+    TRY_LEFT,
+    TRY_RIGHT
+};
+
+int state(int try){
+    int reward = 0;
+
+    int try_x = head->x;
+    int try_y = head->y;
+    switch (head->dir)
+    {
+        case SNAKE_UP:
+            switch (try){
+                case TRY_FORWARD:
+                    try_y--;
+                    break;
+                case TRY_LEFT:
+                    try_x--;
+                    break;
+                case TRY_RIGHT:
+                    try_x++;
+                    break;
+                }
+            break;
+        case SNAKE_DOWN:
+            switch (try){
+                case TRY_FORWARD:
+                    try_y++;
+                    break;
+                case TRY_LEFT:
+                    try_x++;
+                    break;
+                case TRY_RIGHT:
+                    try_x--;
+                    break;
+                }
+            break;
+        case SNAKE_LEFT:
+            switch (try){
+                case TRY_FORWARD:
+                    try_x--;
+                    break;
+                case TRY_LEFT:
+                    try_y++;
+                    break;
+                case TRY_RIGHT:
+                    try_y--;
+                    break;
+                }
+            break;
+        case SNAKE_RIGHT:
+            switch (try){
+                case TRY_FORWARD:
+                    try_x++;
+                    break;
+                case TRY_LEFT:
+                    try_y--;
+                    break;
+                case TRY_RIGHT:
+                    try_y++;
+                    break;
+                }
+        break;    
+    }
+
+    if (try_x < 0 || try_x  > GRID_SIZE -1){
+        reward += -100;
+    }
+
+    if (try_y < 0 || try_y  > GRID_SIZE -1){
+        reward += -100;
+    }
+
+    if(try_x == Apple.x && try_y == Apple.y){
+        reward += 100;
+    }
+
+    return reward;
+}
+
 void ai(){
-    int try_f;
-    int try_l;
-    int try_r;
+    int try_f = state(TRY_FORWARD);
+    int try_l = state(TRY_LEFT);
+    int try_r = state(TRY_RIGHT);
 
     if (try_f >= try_l && try_f >= try_r){
         // CONTINUE FORWARD
@@ -373,6 +455,7 @@ int main(){
         }
 
         SDL_RenderClear(renderer);
+        
         // Render Loop Started
         move_snake();
         detect_apple();
@@ -382,10 +465,12 @@ int main(){
         render_snake(renderer, grid_x, grid_y);
         render_apple(renderer, grid_x, grid_y);
 
+        ai();
+
         // Render Loop Finished
         SDL_SetRenderDrawColor(renderer, 0x11, 0x11, 0x11, 255);
         SDL_RenderPresent(renderer);
-        SDL_Delay(120);
+        SDL_Delay(60);
     }
 
     SDL_DestroyRenderer(renderer);
