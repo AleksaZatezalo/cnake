@@ -350,6 +350,7 @@ int state(int try){
         break;    
     }
 
+    // DETECT WALL
     if (try_x < 0 || try_x  > GRID_SIZE -1){
         reward += -100;
     }
@@ -358,10 +359,24 @@ int state(int try){
         reward += -100;
     }
 
+    // DETECT APPLE
     if(try_x == Apple.x && try_y == Apple.y){
         reward += 100;
     }
 
+    //MOVE TOWARDS APPLE
+    int diff_x = abs(Apple.x - head->x);
+    int diff_y = abs(Apple.y - head->y);
+    int try_diff_x  = abs(Apple.x - try_x);
+    int try_diff_y  = abs(Apple.y - try_y);
+    
+    if (try_diff_x < diff_x){
+        reward += 5;
+    }
+
+    if (try_diff_y < diff_y){
+        reward += 5;
+    }
     return reward;
 }
 
