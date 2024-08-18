@@ -63,6 +63,7 @@ void increase_snake(){
 void move_snake(){
     int prev_x = head->x;
     int prev_y = head->y;
+    int prev_dir = head->dir;
 
     switch(head->dir){
         case SNAKE_UP:
@@ -88,14 +89,17 @@ void move_snake(){
     while(track != NULL){
         int save_x = track->x;
         int save_y = track->y;
+        int save_dir = track->dir;
 
         track->x = prev_x;
         track->y = prev_y;
+        track->dir = prev_dir;
         
         track = track->next;
 
         prev_x = save_x;
         prev_y = save_y;
+        prev_dir = save_dir;
     }
 
 
