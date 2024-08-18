@@ -126,6 +126,23 @@ void move_snake(){
     return;
 }
 
+void reset_snake(){
+    Snake *track = head;
+    Snake *temp;
+
+    while(track != NULL){
+        temp = track;
+        track = track->next;
+        free(temp);
+    }
+    
+    init_snake();
+    increase_snake();
+    increase_snake();
+    increase_snake();
+    return;
+}
+
 void render_snake(SDL_Renderer *renderer, int x, int y)
 {
     SDL_SetRenderDrawColor(renderer, 0x00, 0xff, 0x00, 255);
@@ -193,6 +210,13 @@ void detect_apple(){
         increase_snake();
     }
 
+    return;
+}
+
+void detect_crash(){
+    if(head->x < 0 || head->x > GRID_SIZE || head->y < 0 || head->y > GRID_SIZE){
+        reset_snake();
+    }
     return;
 }
 
@@ -271,6 +295,7 @@ int main(){
         // Render Loop Started
         move_snake();
         detect_apple();
+        detect_crash();
 
         render_grid(renderer, grid_x, grid_y);
         render_snake(renderer, grid_x, grid_y);
