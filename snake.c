@@ -247,6 +247,60 @@ void detect_crash(){
     return;
 }
 
+void turn_left(){
+    switch(head->dir){
+        case SNAKE_UP:
+            head->dir = SNAKE_LEFT;
+            break;
+        case SNAKE_DOWN:
+            head->dir = SNAKE_RIGHT;
+            break;
+        case SNAKE_LEFT:
+            head->dir = SNAKE_DOWN;
+            break;
+        case SNAKE_RIGHT:
+            head->dir = SNAKE_UP;
+            break;
+    }
+    return;
+}
+
+void turn_right(){
+    switch(head->dir){
+        case SNAKE_UP:
+            head->dir = SNAKE_RIGHT;
+            break;
+        case SNAKE_DOWN:
+            head->dir = SNAKE_LEFT;
+            break;
+        case SNAKE_LEFT:
+            head->dir = SNAKE_UP;
+            break;
+        case SNAKE_RIGHT:
+            head->dir = SNAKE_DOWN;
+            break;
+    }
+    return;
+}
+
+void ai(){
+    int try_f;
+    int try_l;
+    int try_r;
+
+    if (try_f >= try_l && try_f >= try_r){
+        // CONTINUE FORWARD
+    } else {
+        if (try_l > try_r) {
+            turn_left();
+        } else {
+            turn_right();
+        }
+    }
+
+    return;
+}
+
 int main(){
     srand(time(0));
 
@@ -331,7 +385,7 @@ int main(){
         // Render Loop Finished
         SDL_SetRenderDrawColor(renderer, 0x11, 0x11, 0x11, 255);
         SDL_RenderPresent(renderer);
-        SDL_Delay(80);
+        SDL_Delay(120);
     }
 
     SDL_DestroyRenderer(renderer);
