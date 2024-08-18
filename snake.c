@@ -163,6 +163,15 @@ void render_apple(SDL_Renderer *renderer, int x, int y){
     SDL_RenderFillRect(renderer, &app);
 }
 
+void detect_apple(){
+    if(head->x == Apple.x && head->y == Apple.y){
+        gen_apple();
+        increase_snake();
+    }
+
+    return;
+}
+
 int main(){
     srand(time(0));
 
@@ -237,14 +246,16 @@ int main(){
         SDL_RenderClear(renderer);
         // Render Loop Started
         move_snake();
+        detect_apple();
+
         render_grid(renderer, grid_x, grid_y);
         render_snake(renderer, grid_x, grid_y);
         render_apple(renderer, grid_x, grid_y);
-        
+
         // Render Loop Finished
         SDL_SetRenderDrawColor(renderer, 0x11, 0x11, 0x11, 255);
         SDL_RenderPresent(renderer);
-        SDL_Delay(200);
+        SDL_Delay(80);
     }
 
     SDL_DestroyRenderer(renderer);
